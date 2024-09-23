@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from devils-hr-bomber.tiiny.io/ by HTTrack Website Copier/3.x [XR&CO'2017], Mon, 23 Sep 2024 17:23:02 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCT DEVIL BOMBER</title>
+    <style>
+        @import url('../external.html?link=https://fonts.googleapis.com/css2?family=Nosifer&amp;display=swap');
+
+        body {
+            background-color: #000;
+            color: #ff0000;
+            font-family: 'Nosifer', cursive;
+            text-align: center;
+            padding: 50px 0;
+            overflow-y: scroll;
+            margin: 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 2px solid #ff0000;
+            padding: 30px;
+            background: #1a1a1a;
+            box-shadow: 0 0 15px #ff0000;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ff0000;
+            text-shadow: 2px 2px 10px #ff0000;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            padding: 15px;
+            font-size: 1.2em;
+            margin: 10px 0;
+            border: 1px solid #ff0000;
+            background: #333;
+            color: #ff0000;
+            box-shadow: 0 0 5px #ff0000;
+            width: 90%;
+        }
+
+        #startButton, #stopButton {
+            background-color: #ff0000;
+            color: white;
+            cursor: pointer;
+        }
+
+        #stopButton {
+            display: none;
+        }
+
+        .stats {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #ff0000;
+        }
+
+   
+        .logo {
+            background: url('../external.html?link=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR45jXKfjRKIzk7ZIXM34RziYcm-cz5AX_mRB2Konb2YvpNiEtJUmR8y5w&amp;s=10') no-repeat center center;
+            background-size: cover;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            margin: 0 auto;
+            animation: rotate 10s linear infinite, horror 2s infinite alternate;
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 0 30px #ff0000;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes horror {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+    
+        .skull, .bat {
+            position: absolute;
+            animation: float 10s infinite;
+            z-index: 2;
+        }
+
+        .skull {
+            font-size: 50px;
+            color: #ff0000;
+            animation-delay: -2s;
+        }
+
+        .bat {
+            font-size: 40px;
+            color: #ffffff;
+            animation-delay: -1s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-20px);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+      
+        .skull1 { top: 5%; left: 10%; animation-duration: 6s; }
+        .skull2 { top: 30%; left: 80%; animation-duration: 8s; }
+        .skull3 { top: 60%; left: 20%; animation-duration: 7s; }
+        .bat1 { top: 20%; right: 10%; animation-duration: 5s; }
+        .bat2 { top: 50%; right: 70%; animation-duration: 6s; }
+        .bat3 { top: 70%; right: 40%; animation-duration: 9s; }
+
+       
+        .credit {
+            font-size: 1.2em;
+            color: #ff0000;
+            text-shadow: 2px 2px 10px #ff0000;
+            margin-top: 50px;
+        }
+
+        .credit a {
+            color: #ff0000;
+            text-decoration: none;
+            animation: flicker 1.5s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo"></div> <!-- Logo placed inside the container -->
+        <h1>Devils Hour BOMBER</h1>
+        <input type="text" id="phoneNumber" placeholder="Enter victim's number (e.g., 019xxxxxxx)" />
+        <br>
+        <button id="startButton">START</button>
+        <button id="stopButton">STOP</button>
+        <div class="stats">
+        
+        </div>
+    </div>
+
+
+    <div class="skull skull1">💀</div>
+    <div class="skull skull2">💀️</div>
+    <div class="skull skull3"></div>
+    <div class="bat bat1">💀</div>
+    <div class="bat bat2"></div>
+    <div class="bat bat3">💀</div>
+
+
+    <div class="credit">
+        <p>Credit: <a href="../external.html?link=https://t.me/RAJSHAHIKINGS" target="_blank">BLACK CYBER TEAM</a></p>
+    </div>
+
+    <script>
+        let intervalId;
+        let requestCount = 0;
+        let failedCount = 0;
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const requestCountDisplay = document.getElementById('requestCount');
+        const failedCountDisplay = document.getElementById('failedCount');
+
+        startButton.addEventListener('click', function () {
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            if (!phoneNumber) {
+                alert("Please enter a valid phone number.");
+                return;
+            }
+            startButton.style.display = 'none';
+            stopButton.style.display = 'block';
+
+            intervalId = setInterval(() => {
+                sendRequests(phoneNumber);
+            }, 1000); 
+        });
+
+        stopButton.addEventListener('click', function () {
+            clearInterval(intervalId);
+            startButton.style.display = 'block';
+            stopButton.style.display = 'none';
+        });
+
+        function sendRequests(phoneNumber) {
+            fetch(window.location.href, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `phone=${phoneNumber}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    requestCount += data.sent;
+                    requestCountDisplay.textContent = `Requests Sent: ${requestCount}`;
+                    failedCount += data.failed;
+                    failedCountDisplay.textContent = `Failed: ${failedCount}`;
+                } else {
+                    alert("Error occurred while sending requests.");
+                }
+            })
+            .catch(() => {
+                failedCount++;
+                failedCountDisplay.textContent = `Failed: ${failedCount}`;
+            });
+        }
+    </script>
+
+</body>
+
+<!-- Mirrored from devils-hr-bomber.tiiny.io/ by HTTrack Website Copier/3.x [XR&CO'2017], Mon, 23 Sep 2024 17:23:02 GMT -->
+</html>
